@@ -143,7 +143,6 @@ int main()
 
         vec_push(&holes, &b);
 
-
         // Apply the other lights
         for(int i = 1; i < lights.at; i++) {
             Line* l = (Line*) vec_get(&lights, i);
@@ -155,17 +154,18 @@ int main()
         for (int i = 0; i < holes.at; i++ ) {
             Hole* l = (Hole*) vec_get(&holes, i);
 
-            fprintf(stderr, "%f %f %f\n", first_possible * 1.02, l->end, l->x / l->start * 3.6);
-            if (first_possible * 1.02 < l->end) {
-                // Some math to get it in the right format
-                float answer = l->x / max(l->start, first_possible) * 3.6;
+            float min_speed = l->x / l->end;
+            float max_speed = l->x / l->start;
+
+            fprintf(stderr, "%f %f %f\n", speed, min_speed, max_speed);
+            if (speed > min_speed) {
+                float answer = min(speed, max_speed) * 3.6;
                 fprintf(stderr, "%f\n", answer);
                 printf("%.0f\n", floor(answer + 0.0001));
                 return 0;
             }
         }
     }
-
 
     return 0;
 }
